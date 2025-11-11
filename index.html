@@ -1,14 +1,64 @@
+
+
+
+
  <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-       <h1>Texto</h1>
-    <p id = "nome"></p>
-    <p id = "modo_alternativo"></p>
-<script src="script.js"></script>
-</body>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lista de Soldados</title>
+  </head>
+  <body>
+    <h1>Cadastrar Soldados</h1>
+
+    <form id="form">
+      <input type="text" id="nome" placeholder="Nome" required />
+      <input type="text" id="modo_alternativo" placeholder="modo_alternativo" required />
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <h2>Soldados cadastrados</h2>
+    <ul id="lista"></ul>
+
+    <script>
+      const form = document.getElementById("form");
+      const lista = document.getElementById("lista");
+
+      // Função para carregar usuários
+      async function carregarSoldados() {
+        const resposta = await fetch("/soldados");
+        const soldados = await resposta.json();
+        console.log(soldados);
+
+        lista.innerHTML = "";
+        soldados.forEach((u) => {
+          const li = document.createElement("li");
+          li.textContent = `${u.nome} - ${u.modo_alternativo}`;
+          lista.appendChild(li);
+        });
+      }
+
+      // Função para enviar novo usuário
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const nome = document.getElementById("nome").value;
+        const modo_alternativo = document.getElementById("modo_alternativo").value;
+
+        await fetch("/soldados", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nome, modo_alternativo }), // manda o objeto js para o banco como json
+        });
+
+        form.reset(); // limpa os campos com a função nativa para tags form
+        carregarSoldados(); // atualiza lista
+      });
+
+      // Carrega ao abrir a página
+      carregarSoldados();
+      
+    </script>
+    <script src="script.js"></script>
+  </body>
 </html>

@@ -25,6 +25,20 @@ app.get("/soldados", (req, res) => {
   });
 });
 
+// POST /usuarios → insere um novo usuário no banco
+app.post("/soldados", (req, res) => {
+  const { nome, modo_alternativo } = req.body; // Extrai os dados enviados pelo front
+  db.query(
+    "INSERT INTO soldados (nome, modo_alternativo) VALUES (?, ?)", // Query SQL com placeholders
+    [nome, modo_alternativo], // Valores que substituem os "?"
+    (err, result) => {
+      if (err) throw err;
+      res.json({ message: "Soldado adicionado com sucesso!" }); // Retorno de sucesso
+    }
+  );
+});
+
+
 app.listen(3000, () =>
   console.log("Servidor rodando em http://localhost:3000")
 );
