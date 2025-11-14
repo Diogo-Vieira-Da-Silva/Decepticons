@@ -1,64 +1,156 @@
-
-
-
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <title>Lista de Soldados</title>
+    <title>Lista de Soldados e Médicos</title>
   </head>
   <body>
-    <h1>Cadastrar Soldados</h1>
+  
+    <h1>Cadastro</h1>
 
-    <form id="form">
-      <input type="text" id="nome" placeholder="Nome" required />
-      <input type="text" id="modo_alternativo" placeholder="modo_alternativo" required />
-      <button type="submit">Cadastrar</button>
-    </form>
+    <!-- Formulário para Soldados -->
+    <section>
+      <h2>Cadastrar Soldados</h2>
+      <form id="formSoldados">
+        <input type="text" id="nomeSoldado" placeholder="Nome" required />
+        <input type="text" id="modoAlternativoSoldado" placeholder="Modo alternativo" required />
+        <button type="submit">Cadastrar Soldado</button>
+      </form>
 
-    <h2>Soldados cadastrados</h2>
-    <ul id="lista"></ul>
+      <h3>Soldados cadastrados</h3>
+      <ul id="listaSoldados"></ul>
+    </section>
+
+    <!-- Formulário para Médicos -->
+    <section>
+      <h2>Cadastrar Médicos</h2>
+      <form id="formMedicos">
+        <input type="text" id="nomeMedico" placeholder="Nome" required />
+        <input type="text" id="modoAlternativoMedico" placeholder="Modo alternativo" required />
+        <button type="submit">Cadastrar Médico</button>
+      </form>
+
+      <h3>Médicos cadastrados</h3>
+      <ul id="listaMedicos"></ul>
+    </section>
+
+    <!-- 🔍 NOVA SEÇÃO — Busca -->
+    <h2>Buscar</h2>
+
+    <!-- Busca Soldado -->
+    <section>
+      <h3>Buscar Soldado</h3>
+      <input id="searchSoldadoTerm" type="text" placeholder="id (número) ou nome do soldado" />
+      <div class="buttons">
+        <button id="buscarSoldado" type="button">Buscar Soldado</button>
+        <button id="limparSoldado" type="button">Limpar</button>
+      </div>
+      <ul id="searchSoldadoResults"></ul>
+
+      <p><strong>Nome:</strong> <span id="nomeSoldadoDetalhe"></span></p>
+      <p><strong>Modo alternativo:</strong> <span id="modoSoldadoDetalhe"></span></p>
+    </section>
+
+    <!-- Busca Médico -->
+    <section style="margin-top:12px;">
+      <h3>Buscar Médico</h3>
+      <input id="searchMedicoTerm" type="text" placeholder="id (número) ou nome do médico" />
+      <div class="buttons">
+        <button id="buscarMedico" type="button">Buscar Médico</button>
+        <button id="limparMedico" type="button">Limpar</button>
+      </div>
+      <ul id="searchMedicoResults"></ul>
+
+      <p><strong>Nome:</strong> <span id="nomeMedicoDetalhe"></span></p>
+      <p><strong>Modo alternativo:</strong> <span id="modoMedicoDetalhe"></span></p>
+    </section>
+
+    <!-- carregar script.js -->
+    <script src="script.js"></script>
 
     <script>
-      const form = document.getElementById("form");
-      const lista = document.getElementById("lista");
+      // Soldados
+      const formSoldados = document.getElementById("formSoldados");
+      const listaSoldados = document.getElementById("listaSoldados");
 
-      // Função para carregar usuários
       async function carregarSoldados() {
-        const resposta = await fetch("/soldados");
-        const soldados = await resposta.json();
-        console.log(soldados);
-
-        lista.innerHTML = "";
-        soldados.forEach((u) => {
-          const li = document.createElement("li");
-          li.textContent = `${u.nome} - ${u.modo_alternativo}`;
-          lista.appendChild(li);
-        });
+        try {
+          const resposta = await fetch("/soldados");
+          if (!resposta.ok) throw new Error("Erro ao carregar soldados: " + resposta.status);
+          const soldados = await resposta.json();
+          listaSoldados.innerHTML = "";
+          soldados.forEach((u) => {
+            const li = document.createElement("li");
+            li.textContent = `${u.nome} - ${u.modo_alternativo}`;
+            listaSoldados.appendChild(li);
+          });
+        } catch (err) {
+          console.error(err);
+        }
       }
 
-      // Função para enviar novo usuário
-      form.addEventListener("submit", async (e) => {
+      formSoldados.addEventListener("submit", async (e) => {
         e.preventDefault();
-
-        const nome = document.getElementById("nome").value;
-        const modo_alternativo = document.getElementById("modo_alternativo").value;
-
-        await fetch("/soldados", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nome, modo_alternativo }), // manda o objeto js para o banco como json
-        });
-
-        form.reset(); // limpa os campos com a função nativa para tags form
-        carregarSoldados(); // atualiza lista
+        const nome = document.getElementById("nomeSoldado").value;
+        const modo_alternativo = document.getElementById("modoAlternativoSoldado").value;
+        try {
+          const res = await fetch("/soldados", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, modo_alternativo }),
+          });
+          if (!res.ok) throw new Error("Falha ao cadastrar soldado: " + res.status);
+          formSoldados.reset();
+          carregarSoldados();
+        } catch (err) {
+          console.error(err);
+          alert("Erro ao cadastrar soldado. Veja o console.");
+        }
       });
 
-      // Carrega ao abrir a página
+      // Médicos
+      const formMedicos = document.getElementById("formMedicos");
+      const listaMedicos = document.getElementById("listaMedicos");
+
+      async function carregarMedicos() {
+        try {
+          const resposta = await fetch("/medicos");
+          if (!resposta.ok) throw new Error("Erro ao carregar médicos: " + resposta.status);
+          const medicos = await resposta.json();
+          listaMedicos.innerHTML = "";
+          medicos.forEach((u) => {
+            const li = document.createElement("li");
+            li.textContent = `${u.nome} - ${u.modo_alternativo}`;
+            listaMedicos.appendChild(li);
+          });
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      formMedicos.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const nome = document.getElementById("nomeMedico").value;
+        const modo_alternativo = document.getElementById("modoAlternativoMedico").value;
+        try {
+          const res = await fetch("/medicos", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nome, modo_alternativo }),
+          });
+          if (!res.ok) throw new Error("Falha ao cadastrar médico: " + res.status);
+          formMedicos.reset();
+          carregarMedicos();
+        } catch (err) {
+          console.error(err);
+          alert("Erro ao cadastrar médico. Veja o console.");
+        }
+      });
+
+      // Carrega listas ao abrir a página
       carregarSoldados();
-      
+      carregarMedicos();
     </script>
-    <script src="script.js"></script>
   </body>
 </html>
+
