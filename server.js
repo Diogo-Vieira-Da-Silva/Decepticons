@@ -13,7 +13,7 @@ const db = mysql.createConnection({
   database: "Decepticons",
 });
 
-// GET all soldados
+// ================== GET SOLDADOS ==================
 app.get("/soldados", (req, res) => {
   db.query("SELECT * FROM soldados", (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -21,17 +21,17 @@ app.get("/soldados", (req, res) => {
   });
 });
 
-// GET soldado by id
+// ================== GET SOLDADO BY ID ==================
 app.get("/soldados/:id", (req, res) => {
   const id = req.params.id;
   db.query("SELECT * FROM soldados WHERE id = ?", [id], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
-    if (!results || results.length === 0) return res.status(404).json({ error: "Soldado não encontrado" });
+    if (results.length === 0) return res.status(404).json({ error: "Soldado não encontrado" });
     res.json(results[0]);
   });
 });
 
-// POST new soldado
+// ================== POST SOLDADO ==================
 app.post("/soldados", (req, res) => {
   const { nome, modo_alternativo } = req.body;
   db.query(
@@ -39,12 +39,26 @@ app.post("/soldados", (req, res) => {
     [nome, modo_alternativo],
     (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
-      res.status(201).json({ message: "Soldado adicionado com sucesso!", id: result.insertId });
+      res.status(201).json({ message: "Soldado adicionado!", id: result.insertId });
     }
   );
 });
 
-// GET all medicos
+// ================== DELETE SOLDADO POR NOME ==================
+app.delete("/soldados/:nome", (req, res) => {
+  const nome = req.params.nome.toLowerCase();
+
+  db.query("DELETE FROM soldados WHERE LOWER(nome) = ?", [nome], (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+
+    if (result.affectedRows === 0)
+      return res.status(404).json({ error: "Nenhum soldado com esse nome encontrado" });
+
+    res.json({ message: "Soldado deletado com sucesso!" });
+  });
+});
+
+// ================== GET MEDICOS ==================
 app.get("/medicos", (req, res) => {
   db.query("SELECT * FROM medicos", (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -52,17 +66,17 @@ app.get("/medicos", (req, res) => {
   });
 });
 
-// GET medico by id
+// ================== GET MEDICO BY ID ==================
 app.get("/medicos/:id", (req, res) => {
   const id = req.params.id;
   db.query("SELECT * FROM medicos WHERE id = ?", [id], (err, results) => {
     if (err) return res.status(500).json({ error: err.message });
-    if (!results || results.length === 0) return res.status(404).json({ error: "Médico não encontrado" });
+    if (results.length === 0) return res.status(404).json({ error: "Médico não encontrado" });
     res.json(results[0]);
   });
 });
 
-// POST new medico
+// ================== POST MEDICOS ==================
 app.post("/medicos", (req, res) => {
   const { nome, modo_alternativo } = req.body;
   db.query(
@@ -70,9 +84,24 @@ app.post("/medicos", (req, res) => {
     [nome, modo_alternativo],
     (err, result) => {
       if (err) return res.status(500).json({ error: err.message });
-      res.status(201).json({ message: "Médico adicionado com sucesso!", id: result.insertId });
+      res.status(201).json({ message: "Médico adicionado!", id: result.insertId });
     }
   );
 });
 
+// ================== DELETE MEDICO POR NOME ==================
+app.delete("/medicos/:nome", (req, res) => {
+  const nome = req.params.nome.toLowerCase();
+
+  db.query("DELETE FROM medicos WHERE LOWER(nome) = ?", [nome], (err, result) => {
+    if (err) return res.status(500).json({ error: err.message });
+
+    if (result.affectedRows === 0)
+      return res.status(404).json({ error: "Nenhum médico com esse nome encontrado" });
+
+    res.json({ message: "Médico deletado com sucesso!" });
+  });
+});
+
 app.listen(3000, () => console.log("Servidor rodando em http://localhost:3000"));
+

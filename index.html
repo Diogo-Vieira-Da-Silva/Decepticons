@@ -1,156 +1,69 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Lista de Soldados e Médicos</title>
-  </head>
-  <body>
-  
-    <h1>Cadastro</h1>
+<head>
+  <meta charset="UTF-8" />
+  <title>Lista de Soldados e Médicos</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-    <!-- Formulário para Soldados -->
-    <section>
-      <h2>Cadastrar Soldados</h2>
-      <form id="formSoldados">
-        <input type="text" id="nomeSoldado" placeholder="Nome" required />
-        <input type="text" id="modoAlternativoSoldado" placeholder="Modo alternativo" required />
-        <button type="submit">Cadastrar Soldado</button>
-      </form>
+  <h1>Cadastro</h1>
 
-      <h3>Soldados cadastrados</h3>
-      <ul id="listaSoldados"></ul>
-    </section>
+  <section>
+    <h2>Cadastrar Soldados</h2>
+    <form id="formSoldados">
+      <input type="text" id="nomeSoldado" placeholder="Nome" required />
+      <input type="text" id="modoAlternativoSoldado" placeholder="Modo alternativo" required />
+      <button type="submit">Cadastrar Soldado</button>
+    </form>
 
-    <!-- Formulário para Médicos -->
-    <section>
-      <h2>Cadastrar Médicos</h2>
-      <form id="formMedicos">
-        <input type="text" id="nomeMedico" placeholder="Nome" required />
-        <input type="text" id="modoAlternativoMedico" placeholder="Modo alternativo" required />
-        <button type="submit">Cadastrar Médico</button>
-      </form>
+    <h3>Soldados cadastrados</h3>
+    <ul id="listaSoldados"></ul>
+  </section>
 
-      <h3>Médicos cadastrados</h3>
-      <ul id="listaMedicos"></ul>
-    </section>
+  <section>
+    <h2>Cadastrar Médicos</h2>
+    <form id="formMedicos">
+      <input type="text" id="nomeMedico" placeholder="Nome" required />
+      <input type="text" id="modoAlternativoMedico" placeholder="Modo alternativo" required />
+      <button type="submit">Cadastrar Médico</button>
+    </form>
 
-    <!-- 🔍 NOVA SEÇÃO — Busca -->
-    <h2>Buscar</h2>
+    <h3>Médicos cadastrados</h3>
+    <ul id="listaMedicos"></ul>
+  </section>
 
-    <!-- Busca Soldado -->
-    <section>
-      <h3>Buscar Soldado</h3>
-      <input id="searchSoldadoTerm" type="text" placeholder="id (número) ou nome do soldado" />
-      <div class="buttons">
-        <button id="buscarSoldado" type="button">Buscar Soldado</button>
-        <button id="limparSoldado" type="button">Limpar</button>
-      </div>
-      <ul id="searchSoldadoResults"></ul>
+  <h2>Buscar</h2>
 
-      <p><strong>Nome:</strong> <span id="nomeSoldadoDetalhe"></span></p>
-      <p><strong>Modo alternativo:</strong> <span id="modoSoldadoDetalhe"></span></p>
-    </section>
+  <section>
+    <h3>Buscar Soldado</h3>
+    <input id="searchSoldadoTerm" type="text" placeholder="Nome do soldado" />
+    <button id="buscarSoldado">Buscar</button>
+    <button id="limparSoldado">Limpar</button>
+    <ul id="searchSoldadoResults"></ul>
+    <p><strong>Nome:</strong> <span id="nomeSoldadoDetalhe"></span></p>
+    <p><strong>Modo alternativo:</strong> <span id="modoSoldadoDetalhe"></span></p>
+  </section>
 
-    <!-- Busca Médico -->
-    <section style="margin-top:12px;">
-      <h3>Buscar Médico</h3>
-      <input id="searchMedicoTerm" type="text" placeholder="id (número) ou nome do médico" />
-      <div class="buttons">
-        <button id="buscarMedico" type="button">Buscar Médico</button>
-        <button id="limparMedico" type="button">Limpar</button>
-      </div>
-      <ul id="searchMedicoResults"></ul>
+  <section>
+    <h3>Buscar Médico</h3>
+    <input id="searchMedicoTerm" type="text" placeholder="Nome do médico" />
+    <button id="buscarMedico">Buscar</button>
+    <button id="limparMedico">Limpar</button>
+    <ul id="searchMedicoResults"></ul>
+    <p><strong>Nome:</strong> <span id="nomeMedicoDetalhe"></span></p>
+    <p><strong>Modo alternativo:</strong> <span id="modoMedicoDetalhe"></span></p>
+  </section>
 
-      <p><strong>Nome:</strong> <span id="nomeMedicoDetalhe"></span></p>
-      <p><strong>Modo alternativo:</strong> <span id="modoMedicoDetalhe"></span></p>
-    </section>
+  <script src="script.js"></script>
 
-    <!-- carregar script.js -->
-    <script src="script.js"></script>
-
-    <script>
-      // Soldados
-      const formSoldados = document.getElementById("formSoldados");
-      const listaSoldados = document.getElementById("listaSoldados");
-
-      async function carregarSoldados() {
-        try {
-          const resposta = await fetch("/soldados");
-          if (!resposta.ok) throw new Error("Erro ao carregar soldados: " + resposta.status);
-          const soldados = await resposta.json();
-          listaSoldados.innerHTML = "";
-          soldados.forEach((u) => {
-            const li = document.createElement("li");
-            li.textContent = `${u.nome} - ${u.modo_alternativo}`;
-            listaSoldados.appendChild(li);
-          });
-        } catch (err) {
-          console.error(err);
-        }
-      }
-
-      formSoldados.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const nome = document.getElementById("nomeSoldado").value;
-        const modo_alternativo = document.getElementById("modoAlternativoSoldado").value;
-        try {
-          const res = await fetch("/soldados", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, modo_alternativo }),
-          });
-          if (!res.ok) throw new Error("Falha ao cadastrar soldado: " + res.status);
-          formSoldados.reset();
-          carregarSoldados();
-        } catch (err) {
-          console.error(err);
-          alert("Erro ao cadastrar soldado. Veja o console.");
-        }
-      });
-
-      // Médicos
-      const formMedicos = document.getElementById("formMedicos");
-      const listaMedicos = document.getElementById("listaMedicos");
-
-      async function carregarMedicos() {
-        try {
-          const resposta = await fetch("/medicos");
-          if (!resposta.ok) throw new Error("Erro ao carregar médicos: " + resposta.status);
-          const medicos = await resposta.json();
-          listaMedicos.innerHTML = "";
-          medicos.forEach((u) => {
-            const li = document.createElement("li");
-            li.textContent = `${u.nome} - ${u.modo_alternativo}`;
-            listaMedicos.appendChild(li);
-          });
-        } catch (err) {
-          console.error(err);
-        }
-      }
-
-      formMedicos.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const nome = document.getElementById("nomeMedico").value;
-        const modo_alternativo = document.getElementById("modoAlternativoMedico").value;
-        try {
-          const res = await fetch("/medicos", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ nome, modo_alternativo }),
-          });
-          if (!res.ok) throw new Error("Falha ao cadastrar médico: " + res.status);
-          formMedicos.reset();
-          carregarMedicos();
-        } catch (err) {
-          console.error(err);
-          alert("Erro ao cadastrar médico. Veja o console.");
-        }
-      });
-
-      // Carrega listas ao abrir a página
-      carregarSoldados();
-      carregarMedicos();
-    </script>
-  </body>
+</body>
 </html>
+
+
+
+
+
+
+
 
