@@ -1,0 +1,21 @@
+/* H1 */
+h1.Título {
+  margin-top: 20px;
+
+  margin-bottom: 10px;
+  color: rgb(138, 2, 216); /* COR DO H1 */
+}
+
+/* H3 da listagem */
+h3.Lista {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: rgb(44, 5, 216); /* Cor dos cadastrados */
+}
+
+/* H3 da busca */
+h3.Buscar {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: rgb(9, 240, 47); /* Outra cor — você escolhe */
+}

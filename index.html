@@ -9,7 +9,7 @@
 </head>
 <body>
 
-  <h1>Cadastro</h1>
+  <h1 class="Título">Cadastro</h1>
 
   <section>
     <h2>Cadastrar Soldados</h2>
@@ -19,26 +19,28 @@
       <button type="submit">Cadastrar Soldado</button>
     </form>
 
-    <h3>Soldados cadastrados</h3>
+    <h3 class="Lista">Soldados cadastrados</h3>
     <ul id="listaSoldados"></ul>
   </section>
 
   <section>
-    <h2>Cadastrar Médicos</h2>
+    <h2>Cadastrar Médicos
+    </h2> 
     <form id="formMedicos">
       <input type="text" id="nomeMedico" placeholder="Nome" required />
       <input type="text" id="modoAlternativoMedico" placeholder="Modo alternativo" required />
-      <button type="submit">Cadastrar Médico</button>  
+      <button type="submit">Cadastrar Médico</button>
+  
     </form>
 
-    <h3>Médicos cadastrados</h3>
+    <h3 class="Lista">Médicos cadastrados</h3>
     <ul id="listaMedicos"></ul>
   </section>
 
   <h2>Buscar</h2>
 
   <section>
-    <h3>Buscar Soldado</h3>
+    <h3 class="Buscar">Buscar Soldado</h3>
     <input id="searchSoldadoTerm" type="text" placeholder="Nome do soldado" />
     <button id="buscarSoldado">Buscar</button>
     <button id="limparSoldado">Limpar</button>
@@ -48,7 +50,7 @@
   </section>
 
   <section>
-    <h3>Buscar Médico</h3>
+    <h3 class="Buscar" >Buscar Médico</h3>
     <input id="searchMedicoTerm" type="text" placeholder="Nome do médico" />
     <button id="buscarMedico">Buscar</button>
     <button id="limparMedico">Limpar</button>
