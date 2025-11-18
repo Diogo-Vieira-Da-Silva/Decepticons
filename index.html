@@ -9,55 +9,81 @@
 </head>
 <body>
 
-  <h1 class="Título">Cadastro</h1>
+ <h1 class="Título">Cadastro</h1>
+  <img src="Decepticon.png" class="img-fluid float-start me-3 mb-3" style="max-width: 180px;" alt="Logo Decepticon">
 
-  <section>
-    <h2>Cadastrar Soldados</h2>
-    <form id="formSoldados">
-      <input type="text" id="nomeSoldado" placeholder="Nome" required />
-      <input type="text" id="modoAlternativoSoldado" placeholder="Modo alternativo" required />
-      <button type="submit">Cadastrar Soldado</button>
-    </form>
 
-    <h3 class="Lista">Soldados cadastrados</h3>
-    <ul id="listaSoldados"></ul>
-  </section>
+  <div class="container mt-4">
 
-  <section>
-    <h2>Cadastrar Médicos
-    </h2> 
-    <form id="formMedicos">
-      <input type="text" id="nomeMedico" placeholder="Nome" required />
-      <input type="text" id="modoAlternativoMedico" placeholder="Modo alternativo" required />
-      <button type="submit">Cadastrar Médico</button>
+  <div class="row">
+
+
+    <!-- ESQUERDA: Cadastros -->
+    <div class="col-md-6">
+
   
-    </form>
 
-    <h3 class="Lista">Médicos cadastrados</h3>
-    <ul id="listaMedicos"></ul>
-  </section>
+      <section>
+        <h2 class="text-primary">Cadastrar Soldados</h2>
+        <form id="formSoldados">
+          <input type="text" id="nomeSoldado" placeholder="Nome" required class="form-control mb-2" />
+          <input type="text" id="modoAlternativoSoldado" placeholder="Modo alternativo" required class="form-control mb-2" />
+          <button type="submit">Cadastrar Soldado</button>
+        </form>
 
-  <h2>Buscar</h2>
+        <h3 class="text-success mt-3">Soldados cadastrados</h3>
+        <ul id="listaSoldados"></ul>
+      </section>
 
-  <section>
-    <h3 class="Buscar">Buscar Soldado</h3>
-    <input id="searchSoldadoTerm" type="text" placeholder="Nome do soldado" />
-    <button id="buscarSoldado">Buscar</button>
-    <button id="limparSoldado">Limpar</button>
-    <ul id="searchSoldadoResults"></ul>
-    <p><strong>Nome:</strong> <span id="nomeSoldadoDetalhe"></span></p>
-    <p><strong>Modo alternativo:</strong> <span id="modoSoldadoDetalhe"></span></p>
-  </section>
+      <section class="mt-4">
+        <h2 class="text-primary">Cadastrar Médicos</h2>
+        <form id="formMedicos">
+          <input type="text" id="nomeMedico" placeholder="Nome" required class="form-control mb-2" />
+          <input type="text" id="modoAlternativoMedico" placeholder="Modo alternativo" required class="form-control mb-2" />
+          <button type="submit" >Cadastrar Médico</button>
+        </form>
 
-  <section>
-    <h3 class="Buscar" >Buscar Médico</h3>
-    <input id="searchMedicoTerm" type="text" placeholder="Nome do médico" />
-    <button id="buscarMedico">Buscar</button>
-    <button id="limparMedico">Limpar</button>
-    <ul id="searchMedicoResults"></ul>
-    <p><strong>Nome:</strong> <span id="nomeMedicoDetalhe"></span></p>
-    <p><strong>Modo alternativo:</strong> <span id="modoMedicoDetalhe"></span></p>
-  </section>
+        <h3 class="text-success mt-3">Médicos cadastrados</h3>
+        <ul id="listaMedicos"></ul>
+      </section>
+
+    </div>
+
+    <!-- DIREITA: Busca -->
+    <div class="col-md-6">
+
+      <h2 class="text-primary">Buscar</h2>
+
+      <section>
+        <h3 class="text-success">Buscar Soldado</h3>
+        <input id="searchSoldadoTerm" type="text" placeholder="Nome do soldado"  />
+        <button id="buscarSoldado" >Buscar</button>
+        <button id="limparSoldado" >Limpar</button>
+
+        <ul id="searchSoldadoResults" class="mt-2"></ul>
+
+        <p><strong>Nome:</strong> <span id="nomeSoldadoDetalhe"></span></p>
+        <p><strong>Modo alternativo:</strong> <span id="modoSoldadoDetalhe"></span></p>
+      </section>
+
+      <section class="mt-4">
+        <h3 class="text-success">Buscar Médico</h3>
+        <input id="searchMedicoTerm" type="text" placeholder="Nome do médico"  />
+        <button id="buscarMedico" >Buscar</button>
+        <button id="limparMedico" >Limpar</button>
+
+        <ul id="searchMedicoResults" class="mt-2"></ul>
+
+        <p><strong>Nome:</strong> <span id="nomeMedicoDetalhe"></span></p>
+        <p><strong>Modo alternativo:</strong> <span id="modoMedicoDetalhe"></span></p>
+      </section>
+
+    </div>
+
+  </div>
+
+</div>
+
 
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   
