@@ -5,7 +5,7 @@ Durante o desenvolvimento deste projeto, a configuração inicial do MySQL e sua
 A adição de novos personagens também foi simples e direta.
 Os maiores desafios começaram a surgir ao implementar o sistema de busca, pois em um momento parecia que o botão de pesquisa estava interferindo no botão de adicionar registros. Após ajustes, tudo foi sendo esclarecido.
 
-Entretanto, o maior obstáculo foi o botão de deletar. Enfrentei diversos erros relacionados ao uso de id e nome, que frequentemente resultavam em falhas. Com o tempo, consegui compreender melhor a lógica, revisar os métodos utilizados e encontrar soluções adequadas. Também aprendi novas técnicas durante o processo, graças ao apoio do Kilo Code e do próprio ChatGPT, que auxiliaram na correção dos problemas.
+Entretanto, o maior obstáculo foi o botão de deletar. Enfrentei diversos erros relacionados ao uso de id e nome, que frequentemente resultavam em falhas. Com o tempo, consegui compreender melhor a lógica, revisar os métodos utilizados e encontrar soluções adequadas. Também aprendi novas técnicas durante o processo, graças ao apoio do Kilo Code e do próprio ChatGPT, que auxiliaram na correção dos problemas. E ao final utilizei o que aprendi sobre bootstrap com o professor para refinar o projeto.
 
 Foi um projeto desafiador, mas extremamente valioso para meu aprendizado. Hoje me sinto mais preparado e confiante para lidar com bancos de dados e integração backend.
 
